@@ -1,0 +1,21 @@
+<div style="width: 100vw;">
+    <app-home-component></app-home-component>
+</div>
+<div class="container">
+    <h3 style="font-weight: 200; display: flex; justify-content: center; align-items: center;">Cadastro de Gasto</h3>
+        <div class="col-md-12">
+            <label for="input-valor">Valor:</label>
+            <input type="number" class="form-control" name="input-valor" [(ngModel)]="gasto.valor" required>
+        </div>
+        <div class="col-md-12">
+            <label for="input-estabelecimento">Estabelecimento:</label>
+            <input type="text" class="form-control" name="input-estabelecimento" [(ngModel)]="gasto.estabelecimento" required>
+        </div>
+        <div class="col-md-12">
+            <label for="input-data">Data:</label>
+            <input type="datetime-local" class="form-control" name="input-data" [(ngModel)]="gasto.data" required>
+        </div>
+    
+        <button type="submit" class="btn btn-primary col-md-3" style="margin-top: 10px;" (click)="salvarGasto()">Salvar</button>
+</div>
+

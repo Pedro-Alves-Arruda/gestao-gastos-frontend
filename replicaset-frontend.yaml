@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: frontend
+  labels:
+    app: gestao-gastos-frontend
+    key: gestao-gastos-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      key: gestao-gastos-frontend
+  template:
+    metadata:
+      labels:
+        key: gestao-gastos-frontend
+    spec:
+      containers:
+        - name: gestao-gastos-frontend
+          image: pedroarruda/gestao-gastos-frontend:latest
+          ports: 
+            - containerPort: 8080
+

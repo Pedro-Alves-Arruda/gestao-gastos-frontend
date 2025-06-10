@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: replicaset-backend
+  labels:
+    app: gestao-gastos-backend
+    key: gestao-gastos-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      key: gestao-gastos-backend
+  template:
+    metadata:
+      labels:
+        key: gestao-gastos-backend
+    spec:
+      containers:
+        - name: gestao-gastos-backend
+          image: pedroarruda/gestao-gastos-backend:latest
+          ports: 
+            - containerPort: 8080
+

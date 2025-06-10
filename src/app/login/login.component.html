@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="PT-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu Principal</title>
+</head>
+<body>
+
+    <div class="container">
+        
+        <h3 style="font-weight: 200; display: flex; justify-content: center; align-items: center;">Login</h3>
+
+            <div class="col-md-12">
+                <label for="input-email">Email:</label>
+                <input type="email" class="form-control" name="input-email" [(ngModel)]="usuario.email" required>
+            </div>
+            <div class="col-md-12">
+                <label for="input-password">Senha:</label>
+                <input type="password" class="form-control" name="input-password" [(ngModel)]="usuario.password" required >
+            </div>
+        
+            <div class="col-md-12" style="display: flex; align-items: center; justify-content: space-between;">
+                <button type="submit" class="btn btn-primary col-md-4" style="margin-top: 10px;" (click)="login()">Login</button>
+                <button type="submit" class="btn btn-dark col-md-8 ml-3" style="margin-top: 10px;" (click)="loginComGoogle()">
+                    <i class="fab fa-google"></i>
+                    Logar com google
+                </button>
+            </div>
+    </div>
+</body>

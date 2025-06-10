@@ -1,0 +1,14 @@
+.container{
+    margin-top: 30px;
+}
+
+.table-hover td, .table-hover thead td
+{
+    --bs-table-color-state: black;
+    --bs-table-bg-state: var(--color-principal);
+}
+.table-hover td:hover, .table-hover thead td
+{
+    --bs-table-color-state: black;
+    --bs-table-bg-state: #cbe7fa;
+}

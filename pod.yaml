@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: gestao-gastos-backend
+  labels:
+    name: gestao-gastos-backend
+spec:
+  containers:
+  - name: gestao-gastos-backend
+    image: pedroarruda/gestao-gastos-backend:latest
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 8080
