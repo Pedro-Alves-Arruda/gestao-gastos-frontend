@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ListarServicesService } from '../../Services/listar-services.service';
 import { HomeComponentComponent } from '../../home-component/home-component.component';
 import { CommonModule } from '@angular/common';
@@ -8,27 +8,49 @@ import { FormsModule } from '@angular/forms';
 import { CadastroServices } from '../../Services/cadastro-services.service';
 import { AuthService } from '../../AuthService';
 import { WebSocketServicesService } from '../../Services/web-socket-services.service';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator'; 
 
 
 @Component({
   selector: 'app-listar',
-  imports: [HomeComponentComponent, CommonModule, MatIconModule, FormsModule, AuthService],
+  imports: [HomeComponentComponent, CommonModule, MatIconModule, FormsModule, AuthService, MatTableModule, MatPaginatorModule],
   templateUrl: './listar.component.html',
   styleUrl: './listar.component.scss'
 })
 export class ListarComponent {
-
+  
   constructor(private services: ListarServicesService, 
-              private editarServices:CadastroServices, 
-              private authService: AuthService,
-              private webSocket:WebSocketServicesService){}
-            
+    private editarServices:CadastroServices, 
+    private authService: AuthService,
+    private webSocket:WebSocketServicesService){}
+    
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+    
+  dataSource = new MatTableDataSource<NotaFiscalDTO>();
+    
+  displayedColumns: string[] = [];
+
+  ngOnInit(){
+    this.displayedColumns = ['Estabelecimento', 'Valor', 'Data'];
+    this.buscarGastos();
+    this.usuarioLogado = this.authService.getUsuarioLogado();
+
+    this.webSocket.novoGastoSubject.subscribe((gasto) => {
+      this.ngOnInit()
+    });
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+  
   isEdicao = false;
   isSalvar = false
-
+  
   usuarioLogado:any
   
-  gastos?:Array<NotaFiscalDTO>
+  gastos?:any
   
   gastosEditado:any = {
     id:null,
@@ -38,14 +60,6 @@ export class ListarComponent {
     usuario: ''
   }
   
-  ngOnInit(){
-    this.buscarGastos();
-    this.usuarioLogado = this.authService.getUsuarioLogado();
-
-    this.webSocket.novoGastoSubject.subscribe((gasto) => {
-      this.ngOnInit()
-    });
-  }
 
   formataData(data:any){
     return new Date(data[0], data[1] - 1, data[2], data[3], data[4])
@@ -104,8 +118,8 @@ export class ListarComponent {
   buscarGastos(){
     return this.services.listar()
     .subscribe(res =>{
-      console.log(res)
       this.gastos = res;
+      this.dataSource.data = this.gastos;
     })
   }
 

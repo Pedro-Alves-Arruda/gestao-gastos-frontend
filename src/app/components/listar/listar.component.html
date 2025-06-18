@@ -2,34 +2,43 @@
     <app-home-component></app-home-component>
 </div>
 
-<h3 style="font-weight: 200; display: flex; justify-content: center; align-items: center;margin-top: 20px;">Lista de Gastos</h3>
-<hr>
+<h3 style="font-weight: 200; display: flex; justify-content: center; align-items: center;margin-top: 20px; color: white;">Lista de Gastos</h3>
+<hr style="color: white;">
 
 <div class="col-md-3">
     <button class="btn btn-warning fa fa-plus fa-sm" style="margin-left: 94px;height: 21px;width: 37px;" data-toggle="modal" data-target="#modalEdicao" (click)="AlteraStatusisSalvar()"></button>
 </div>
 <div class="container">
-    <table class="table table-hover">
-        <thead>
-            <td class="table-light">Estabelecimento</td> 
-            <td class="table-light">Valor</td> 
-            <td class="table-light">Data</td> 
-            <td class="table-light">Ações</td> 
-    
-        </thead>
-        <tbody>
-            <tr *ngFor="let gasto of gastos">
-                <td class="table-light">{{gasto.estabelecimento}}</td> 
-                <td class="table-light">{{gasto.valor}}</td> 
-                <td class="table-light">{{formataData(gasto.data)}}</td>
-                <td class="table-light">
-                    <button type="button" class="btn btn-primary" style="width: 17%; padding: 0px;" data-toggle="modal" data-target="#modalEdicao" (click)="carregaValor(gasto)"><mat-icon style="font-size: 17px; display: flex; align-items: center; justify-content: center;">edit</mat-icon></button>
-                    <button type="button" class="btn btn-danger" style="width: 17%; padding: 0px;" data-toggle="modal" data-target="#modalExclusão" (click)="carregaValor(gasto)"><mat-icon style="font-size: 17px; display: flex; align-items: center; justify-content: center;">delete</mat-icon></button>
-                </td>
-                
-            </tr>
-        </tbody>
+
+   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="Estabelecimento">
+        <th mat-header-cell *matHeaderCellDef> Estabelecimento </th>
+        <td mat-cell *matCellDef="let item"> {{item.estabelecimento}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Valor">
+        <th mat-header-cell *matHeaderCellDef> Valor </th>
+        <td mat-cell *matCellDef="let item"> {{item.valor}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Data">
+        <th mat-header-cell *matHeaderCellDef> Data </th>
+        <td mat-cell *matCellDef="let item"> {{formataData(item.data)}} </td>
+      </ng-container>
+
+      <!-- Header e conteúdo -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns">
+        <td *matCellDef="let item"> 
+          <button type="button" class="btn btn-primary" style="width: 17%; padding: 0px;" data-toggle="modal" data-target="#modalEdicao" (click)="carregaValor(item)"><mat-icon style="font-size: 17px; display: flex; align-items: center; justify-content: center;">edit</mat-icon></button>
+          <button type="button" class="btn btn-danger" style="width: 17%; padding: 0px;" data-toggle="modal" data-target="#modalExclusão" (click)="carregaValor(item)"><mat-icon style="font-size: 17px; display: flex; align-items: center; justify-content: center;">delete</mat-icon></button>
+        </td>
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+
+    <!-- Paginação -->
+    <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 
 
     <div class="modal" tabindex="-1" role="dialog" id="modalEdicao">

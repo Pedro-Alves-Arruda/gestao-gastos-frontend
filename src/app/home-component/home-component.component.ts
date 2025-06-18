@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-home-component',
-  imports: [],
+  imports: [RouterOutlet],
   templateUrl: './home-component.component.html',
   styleUrl: './home-component.component.scss'
 })
@@ -16,6 +16,6 @@ export class HomeComponentComponent {
   }
 
   direcionaRotaListar(){
-    this.router.navigate(['/listar'])
+    this.router.navigate(['/home/listar'])
   }
 }

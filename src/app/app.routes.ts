@@ -18,13 +18,13 @@ export const routes: Routes = [
     },
     {
         path:"home", component:HomeComponentComponent, children : [
-            {
-                path:"cadastro-gasto", component:CadastroComponent,
-            },
-            {
-                path:"listar", component:ListarComponent
-            }
-
+            
         ]
+    },
+    {
+        path:"cadastro-gasto", component:CadastroComponent,
+    },
+    {
+        path:"listar", component:ListarComponent
     }
 ];
